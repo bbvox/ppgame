@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ping Pong</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="src/styles.css">
+  <script src="src/scripts.js"></script>
+
+</head>
+
+<body>
+  <main class="fc">
+  <ul class="flex">
+    <li class="half">
+      <h2>Latest Games</h2>
+      <div id="listGames"></div>
+    </li>
+    <li class="half">
+      <h2>Add games</h2>
+      <form>
+        <ul class="flex add">
+          <li class="auto">
+            <input type="text" id="player1" onkeyup="game.onChange(event)" placeholder="Look for player">
+            <div class="listMenu" id="player1List"></div>
+          </li>
+          <li>VS</li>
+          <li class="auto">
+            <input type="text" id="player2" onkeyup="game.onChange(event)" placeholder="Look for player">
+            <div class="listMenu" id="player2List"></div>
+          </li>
+        </ul>
+        <button type="button" class="addbtn" onClick="game.addGame(event)">Add game</button>
+      </form>
+    </li>
+  </ul>
+  </main>
+  <script>
+    var game = new Game("listGames", true);
+  </script>
+</body>
+
+</html>
