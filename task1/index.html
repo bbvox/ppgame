@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ping Pong</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="include/styles.css">
+  <script src="include/scripts.js"></script>
+</head>
+
+<body>
+  <main class="fc">
+    <h2>Latest games</h2>
+    <ul>
+      <li class="lose" id="game0">
+        <a href="#" class="delbtn" onClick="deleteGame(0, event)"></a>
+        <ul class="flex">
+          <li><img src="images/paint.png"></li>
+          <li>Kerge Kotzher 3-2 Emily M.Mills
+            <p class="results">11-7 | 11-9 | 7-11 | 9-11 | 11-3</p>
+          </li>
+          <li><img src="images/paint.png"></li>
+        </ul>
+      </li>
+      <li class="win" id="game1">
+        <a href="#" class="delbtn" onClick="deleteGame(1, event)"></a>
+        <ul class="flex">
+          <li><img src="images/paint.png"></li>
+          <li>Cho Se 1-2 Du Ben
+            <p class="results">11-7 | 9-11 | 7-11</p>
+          </li>
+          <li><img src="images/paint.png"></li>
+        </ul>
+      </li>
+      <li class="win" id="game2">
+        <a href="#" class="delbtn" onClick="deleteGame(2, event)"></a>
+        <ul class="flex">
+          <li><img src="images/paint.png"></li>
+          <li>Jang Woojin 2-0 Karlsson Kristian
+            <p class="results">11-7 | 12-10</p>
+          </li>
+          <li><img src="images/paint.png"></li>
+        </ul>
+      </li>
+    </ul>
+  </main>
+</body>
+
+</html>
