@@ -15,6 +15,23 @@ cd ~/
 # install dependencies
 npm install
 
-# run the tests
+# run the tests - command line
 npm test
+
+# or open test/index.html - browser
+
 ```
+
+### Other options and devDependencies
+```
+# compile scss file(scss/styles.scss) into css
+npm run scss
+
+# scss watcher
+npm run watch
+```
+
+1. node-sass - Css compiler
+2. mocha - test runner
+3. chai - assertion library
+4. sinon - spies, stubs & mocks for js

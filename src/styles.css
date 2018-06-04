@@ -1,0 +1,137 @@
+body {
+  padding: 0;
+  margin: 0; }
+
+h2,
+form {
+  text-align: center; }
+
+ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px; }
+
+img {
+  max-width: 40px;
+  border-radius: 50%; }
+
+/********  Funding CIRCLE placeholder ********/
+main.fc {
+  width: 94%;
+  margin: 3% auto;
+  /* Input form Add Game */
+  /* DELETE BUTTON */
+  /* FIRST PLAYER WIN */
+  /* SECOND PLAYER WIN */ }
+  main.fc ul.flex {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    -webkit-justify-content: center;
+    flex-direction: row;
+    font-weight: bold; }
+    main.fc ul.flex li {
+      position: relative;
+      margin: 2% 0px;
+      min-width: 70px; }
+    main.fc ul.flex li.half {
+      flex-basis: 46%;
+      margin: 2%;
+      padding: 1%;
+      border: 1px solid #e0e0e0; }
+  main.fc ul.flex.game li:first-child {
+    text-align: right; }
+  main.fc ul.flex.game li:last-child {
+    text-align: left; }
+  main.fc ul.game li,
+  main.fc ul.add li {
+    margin: 2%;
+    text-align: center; }
+  main.fc ul.flex.add {
+    flex-wrap: wrap;
+    align-items: center; }
+  main.fc .add {
+    /* Auto suggestion dropdown menu */ }
+    main.fc .add input,
+    main.fc .add select {
+      padding: 0.5em 1em; }
+    main.fc .add .auto {
+      position: relative; }
+    main.fc .add .listMenu {
+      position: relative;
+      width: 100%; }
+      main.fc .add .listMenu ul {
+        position: absolute;
+        width: 100%;
+        z-index: 10; }
+        main.fc .add .listMenu ul li {
+          text-align: left;
+          border: 1px solid #e0e0e0;
+          background: white;
+          margin: 0; }
+          main.fc .add .listMenu ul li a {
+            max-width: 100%;
+            display: block;
+            padding: 0.5em 1em;
+            text-decoration: none;
+            color: #0664FF; }
+          main.fc .add .listMenu ul li a:hover {
+            color: #3b9a49; }
+  main.fc .addbtn {
+    margin: 10%;
+    background: #0664FF;
+    font-size: 120%;
+    color: white;
+    border: none;
+    padding: 0.5em 1em; }
+  main.fc a.delbtn {
+    float: right;
+    width: 16px;
+    height: 16px;
+    background: #ffffff url("./images/delete.svg") no-repeat center;
+    background-size: 100%;
+    margin: 15px;
+    padding: 5px; }
+  main.fc p.score {
+    font-weight: normal;
+    font-size: 90%;
+    text-align: center; }
+  main.fc li.win li:first-child:before {
+    content: " ";
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    margin: 1em 0;
+    background: #3b9a49;
+    border: 3px solid #3b9a49;
+    border-radius: 50%;
+    left: 0px; }
+  main.fc li.lose li:last-child:after {
+    content: " ";
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    margin: 1em 0;
+    background: #3b9a49;
+    border: 3px solid #3b9a49;
+    border-radius: 50%;
+    right: 0px; }
+
+@media screen and (max-width: 800px) {
+  main.fc {
+    width: 100%;
+    padding: 1em 0;
+    border: none; }
+    main.fc #listGames > ul > li {
+      border-bottom: 1px solid #e0e0e0;
+      padding: 1em 0; }
+    main.fc ul.flex {
+      flex-direction: column; }
+    main.fc ul.flex.game li:first-child, main.fc ul.flex.game li:last-child {
+      text-align: center; }
+    main.fc li.win li:first-child:before {
+      left: 35%; }
+    main.fc li.lose li:last-child:after {
+      right: 35%; } }

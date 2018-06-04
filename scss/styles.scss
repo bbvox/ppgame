@@ -1,0 +1,196 @@
+$borderColor: #e0e0e0;
+$winnerColor: #3b9a49;
+$secondColor: #0664FF;
+
+@mixin displayFlex {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@mixin winnerDot {
+  content: " ";
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  margin: 1em 0;
+  background: $winnerColor;
+  border: 3px solid $winnerColor;
+  border-radius: 50%;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+h2,
+form {
+  text-align: center;
+}
+
+ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+img {
+  max-width: 40px;
+  border-radius: 50%;
+}
+
+
+
+/********  Funding CIRCLE placeholder ********/
+
+main.fc {
+  width: 94%;
+  margin: 3% auto;
+
+  ul.flex {
+    @include displayFlex;
+    justify-content: center;
+    -webkit-justify-content: center;
+    flex-direction: row;
+    font-weight: bold;
+    li {
+      position: relative;
+      margin: 2% 0px;
+      min-width: 70px;
+    }
+    li.half {
+      flex-basis: 46%;
+      margin: 2%;
+      padding: 1%;
+      border: 1px solid $borderColor;
+    }
+  }
+
+  ul.flex.game li:first-child {
+    text-align:right;
+  }
+  ul.flex.game li:last-child {
+    text-align: left;
+  }
+  ul.game li,
+  ul.add li {
+    margin: 2%;
+    text-align: center;
+  }
+
+  /* Input form Add Game */
+  ul.flex.add {
+    flex-wrap:wrap;
+    align-items:center;
+  }
+  .add {
+    input,
+    select {
+      padding: 0.5em 1em;
+    }
+    .auto {
+      position: relative;
+    }
+    /* Auto suggestion dropdown menu */
+    .listMenu {
+      position: relative;
+      width: 100%;
+
+      ul {
+        position: absolute;
+        width: 100%;
+        z-index: 10;
+        li {
+          text-align: left;
+          border: 1px solid $borderColor;
+          background: white;
+          margin: 0;
+
+          a {
+            max-width: 100%;
+            display: block;
+            padding: 0.5em 1em;
+            text-decoration: none;
+            color: #0664FF;
+          }
+          a:hover {
+            color: $winnerColor;
+          }
+        }
+      }
+    }
+  }
+
+  .addbtn {
+    margin: 10%;
+    background: $secondColor;
+    font-size: 120%;
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+  }
+
+  /* DELETE BUTTON */
+  a.delbtn {
+    float: right;
+    width: 16px;
+    height: 16px;
+    background: #ffffff url("./images/delete.svg") no-repeat center;
+    background-size: 100%;
+    margin: 15px;
+    padding: 5px;
+  }
+
+  p.score {
+    font-weight: normal;
+    font-size: 90%;
+    text-align: center;
+  }
+
+  /* FIRST PLAYER WIN */
+  li.win {
+    li:first-child:before {
+      @include winnerDot;
+      left: 0px;
+    }
+  }
+
+  /* SECOND PLAYER WIN */
+  li.lose {
+    li:last-child:after {
+      @include winnerDot;
+      right: 0px;
+    }
+  }
+}
+
+
+@media screen and (max-width: 800px) {
+  main.fc {
+    width: 100%;
+    padding: 1em 0;
+    border: none;
+    
+    #listGames>ul>li {
+      border-bottom: 1px solid #e0e0e0;
+      padding: 1em 0;
+    }
+    ul.flex {
+      flex-direction: column;
+    }
+
+    ul.flex.game li:first-child, ul.flex.game li:last-child {
+      text-align: center;
+    }
+
+    li.win li:first-child:before {
+      left: 35%;
+    }
+
+    li.lose li:last-child:after {
+      right: 35%;
+    }
+  }
+}
