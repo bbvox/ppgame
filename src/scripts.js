@@ -1,6 +1,6 @@
 var Game = Game || {};
 (function() {
-  var list = {
+  let list = {
     players: [],
     games: []
   };
@@ -52,7 +52,7 @@ var Game = Game || {};
 
   // 
   Game.prototype.renderGames = function() {
-    var gamesHtml = "<ul>";
+    let gamesHtml = "<ul>";
 
     for (var i = 0; i < list.games.length; i++) {
       gamesHtml += this.htmlRow(i);
@@ -65,11 +65,11 @@ var Game = Game || {};
 
   // renderPlayer field
   Game.prototype.renderPlayer = function(fieldID) {
-    var playersHtml;
+    let playersHtml;
 
     playersHtml = "<option value=''>Look for player</option>";
 
-    for (var i = 0; i < list.players.length; i++) {
+    for (let i = 0; i < list.players.length; i++) {
       playersHtml += this.htmlOption(i);
     }
 
@@ -77,7 +77,7 @@ var Game = Game || {};
   }
 
   Game.prototype.htmlOption = function(playerID) {
-    var tmpl = `
+    const tmpl = `
     <option value="${playerID}">
     ${list.players[playerID]}
     </option>
@@ -87,7 +87,7 @@ var Game = Game || {};
   }
 
   Game.prototype.htmlRow = function(gameID) {
-    var tmpl, gameData, gameClass, gamePlayers;
+    let tmpl, gameData, gameClass, gamePlayers;
     if (!list.games[gameID]) {
       return;
     }
@@ -108,13 +108,13 @@ var Game = Game || {};
   }
 
   Game.prototype.htmlGame = function(gameID) {
-    var tmpl, gameData, playersData;
+    let tmpl, playersData;
 
     if (gameID === undefined || !list.games[gameID]) {
       return;
     }
 
-    gameData = list.games[gameID];
+    const gameData = list.games[gameID];
     playersData = [
       list.players[gameData.id1],
       list.players[gameData.id2]
@@ -134,7 +134,7 @@ var Game = Game || {};
   }
 
   Game.prototype.addGame = function() {
-    var result, gameData = {};
+    let result, gameData = {};
 
     gameData.id1 = this.fields.element[0].value;
     gameData.id2 = this.fields.element[1].value;
@@ -176,9 +176,7 @@ var Game = Game || {};
    *
    */
   Game.prototype.getResult = function() {
-    var result, win1, win2;
-
-    result = this.getSet();
+    const result = this.getSet();
 
     if (result.player1) {
       this.tmpResult.player1.push(result.player1.join("-"))
@@ -186,8 +184,8 @@ var Game = Game || {};
       this.tmpResult.player2.push(result.player2.join("-"))
     }
     this.tmpResult.cnt++;
-    win1 = this.tmpResult.player1.length;
-    win2 = this.tmpResult.player2.length;
+    const win1 = this.tmpResult.player1.length;
+    const win2 = this.tmpResult.player2.length;
 
     if ((win1 - win2 >= 2) || (win2 - win1 >= 2) || this.tmpResult.cnt === 5) {
       return this.tmpResult;
@@ -203,7 +201,7 @@ var Game = Game || {};
    * @return {object} {player1:} || {player2:}
    */
   Game.prototype.getSet = function() {
-    var oneSet = [];
+    let oneSet = [];
 
     oneSet[0] = this.random();
     oneSet[1] = this.random();
@@ -217,12 +215,8 @@ var Game = Game || {};
     }
   }
 
-  Game.prototype.random = function() {
-    return Math.floor(Math.random() * 12);
-  }
-
   Game.prototype.deleteGame = function(gameID, ev) {
-    var rowElement;
+    let rowElement;
 
     rowElement = this.getId("game" + gameID);
     if (gameID === undefined || !rowElement) {
@@ -236,23 +230,24 @@ var Game = Game || {};
   }
 
   Game.prototype.deleteGameList = function(gameID) {
-    list.games = list.games.filter(function(value, key) {
-      return key !== gameID;
+    list.games = list.games.filter((value, key) => {
+      key !== gameID
     });
   }
 
+  Game.prototype.random = () =>
+    Math.floor(Math.random() * 12);
+
   /* Excercise 3 */
   Game.prototype.onChange = function(event) {
-    var fieldID, searchTerm;
-
-    fieldID = event.target.id;
-    searchTerm = event.target.value;
+    const fieldID = event.target.id;
+    const searchTerm = event.target.value;
 
     if (!searchTerm) {
       return this.clearPlayersList(fieldID);
     }
 
-    var foundPlayers = this.filterPlayers(searchTerm);
+    const foundPlayers = this.filterPlayers(searchTerm);
 
     this.renderPlayersList(foundPlayers, fieldID);
   }
@@ -260,8 +255,8 @@ var Game = Game || {};
   Game.prototype.filterPlayers = function(searchStr) {
     var foundPlayers;
     searchStr = searchStr.toLowerCase();
-    foundPlayers = list.players.filter(function(value) {
-      var lowerCase = value.toLowerCase();
+    foundPlayers = list.players.filter(value => {
+      const lowerCase = value.toLowerCase();
 
       return lowerCase.indexOf(searchStr) === 0;
     });
@@ -270,7 +265,7 @@ var Game = Game || {};
   }
 
   Game.prototype.renderPlayersList = function(playersList, fieldID) {
-    var playersHtml;
+    let playersHtml;
 
     playersHtml = "<ul>";
     playersList.forEach(player => {
@@ -284,10 +279,8 @@ var Game = Game || {};
   }
 
   Game.prototype.setPlayer = function(event, fieldID) {
-    var playerName, elementKey;
-
-    playerName = event.target.text;
-    elementKey = (fieldID === "player1") ? 0 : 1;
+    const playerName = event.target.text;
+    const elementKey = (fieldID === "player1") ? 0 : 1;
 
     this.fields.element[elementKey].value = playerName;
 
@@ -302,9 +295,8 @@ var Game = Game || {};
 
   // DOM element with id are global variables and 
   // can be access directly from window object
-  Game.prototype.getId = function(elementID) {
-    return document.getElementById(elementID) || false;
-  }
+  Game.prototype.getId = elementID => 
+     document.getElementById(elementID) || false;
 
   list.players = [
     "Achanta Sharath Kamal",

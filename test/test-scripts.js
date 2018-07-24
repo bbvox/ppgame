@@ -4,33 +4,33 @@ if (typeof require !== "undefined") {
   var Game = require("../src/scripts");
 }
 
-var testData = {
+let testData = {
   element: "listGames",
   elPlayer1: "player1",
   elPlayer2: "player2",
   searchStr: "as",
   searchStrUpper: "AS",
-  searchExpect: ['Assar Omar'],
-  player: 'Assar Omar',
+  searchExpect: ["Assar Omar"],
+  player: "Assar Omar",
   noop: function () {}
 };
 
-describe("Constructor initialization", function() {
-  var game, spies = {};
+describe("Constructor initialization", () => {
+  let game, spies = {};
 
-  it("should throw Error w/o argument", function() {
+  it("should throw Error w/o argument", () => {
     game = new Game();
     expect(game).to.be.an.instanceof(Error);
   });
 
-  it("should throw Error with missing element", function() {
+  it("should throw Error with missing element", () => {
     sinon.stub(Game.prototype, 'getId').returns(false);
 
     game = new Game();
     expect(game).to.be.an.instanceof(Error);
   });
 
-  it("should be OK and call init method", function() {
+  it("should be OK and call init method", () => {
     sinon.stub(Game.prototype, 'getId').returns(true);
 
     spies.init = sinon.spy(Game.prototype, 'init');
@@ -41,14 +41,14 @@ describe("Constructor initialization", function() {
     spies.init.restore();
   });
 
-  it("should be OK and instanceof Game", function() {
+  it("should be OK and instanceof Game", () => {
     sinon.stub(Game.prototype, 'getId').returns(true);
 
     game = new Game(testData.element);
     expect(game).to.be.an.instanceof(Game);
   });
 
-  afterEach(function() {
+  afterEach(() => {
     if (Game.prototype.getId.restore) {
       Game.prototype.getId.restore();
     }
@@ -56,10 +56,10 @@ describe("Constructor initialization", function() {
 });
 
 
-describe("Delete game method", function() {
-  var game, stubs = {};
+describe("Delete game method", () => {
+  let game, stubs = {};
 
-  beforeEach(function() {
+  beforeEach(() => {
     stubs.getId = sinon.stub(Game.prototype, 'getId');
     stubs.getId.onCall(0).returns(true);
     stubs.init = sinon.stub(Game.prototype, 'init');
@@ -67,32 +67,32 @@ describe("Delete game method", function() {
     game = new Game(testData.element);
   });
 
-  it("should return Error when elementID is missing", function() {
+  it("should return Error when elementID is missing", () => {
     stubs.getId.onCall(1).returns(false);
-    var delGame = game.deleteGame(2);
+    let delGame = game.deleteGame(2);
 
     expect(delGame).to.be.an.instanceof(Error);
   });
 
-  it("should be OK and call element remove function", function() {
-    var spy = sinon.spy();
+  it("should be OK and call element remove function", () => {
+    let spy = sinon.spy();
     stubs.getId.onCall(1).returns({ remove: spy });
-    var delGame = game.deleteGame(2);
-
+    
+    game.deleteGame(2);
     expect(spy.called).to.be.true;
   });
 
-  afterEach(function() {
+  afterEach(() => {
     stubs.getId.restore();
     stubs.init.restore();
   });
 });
 
-describe("Add game method", function() {
-  var game, stubs = {},
+describe("Add game method", () => {
+  let game, stubs = {},
     spies = {};
 
-  beforeEach(function() {
+  beforeEach(() => {
     stubs.getId = sinon.stub(Game.prototype, 'getId');
     stubs.getId.onCall(0).returns(true);
     stubs.init = sinon.stub(Game.prototype, 'init');
@@ -100,15 +100,14 @@ describe("Add game method", function() {
     game = new Game(testData.element);
   });
 
-  it("should return Error when players2 is the same as player1", function() {
-    game.fields.element[0] = { value: 1 };
-    game.fields.element[1] = { value: 1 };
-    var addGame = game.addGame();
-
+  it("should return Error when players2 is the same as player1", () => {
+    game.fields.element = [{ value: 1 }, { value: 1 }];
+    
+    const addGame = game.addGame();
     expect(addGame).to.be.an.instanceof(Error);
   });
 
-  it("should be OK and call resetTmp, getResult & renderGames", function() {
+  it("should be OK and call resetTmp, getResult & renderGames", () => {
     spies.resetTmp = sinon.spy(game, 'resetTmp');
     spies.getResult = sinon.spy(game, 'getResult');
 
@@ -124,17 +123,17 @@ describe("Add game method", function() {
     expect(stubs.renderGames.called).to.be.true;
   });
 
-  afterEach(function() {
+  afterEach(() => {
     stubs.getId.restore();
     stubs.init.restore();
   });
 });
 
-describe("Get result & getSet method", function() {
-  var game, stubs = {},
+describe("Get result & getSet method", () => {
+  let game, stubs = {},
     spies = {};
 
-  beforeEach(function() {
+  beforeEach(() => {
     stubs.getId = sinon.stub(Game.prototype, 'getId');
     stubs.getId.onCall(0).returns(true);
     stubs.init = sinon.stub(Game.prototype, 'init');
@@ -142,18 +141,16 @@ describe("Get result & getSet method", function() {
     game = new Game(testData.element);
   });
 
-  it("should return set winner: player1 or player2", function() {
-    var setResult, winnerScore;
-
-    setResult = game.getSet();
+  it("should return set winner: player1 or player2", () => {
+    const setResult = game.getSet();
 
     expect(setResult).to.have.any.keys('player1', 'player2');
   });
 
-  it("should return winner set score at least 11 points and diff at least 2", function() {
-    var setResult, winScore, loseScore;
+  it("should return winner set score at least 11 points and diff at least 2", () => {
+    let winScore, loseScore;
 
-    setResult = game.getSet();
+    const setResult = game.getSet();
     if (setResult.player1) {
       winScore = setResult.player1[0];
       loseScore = setResult.player1[1];
@@ -166,29 +163,28 @@ describe("Get result & getSet method", function() {
     expect(winScore - loseScore).to.be.at.least(2);
   })
 
-  it("should call method X times for X sets(max 5)", function() {
-    var totalSets, gameResult;
+  it("should call method X times for X sets(max 5)", () => {
     spies.getResult = sinon.spy(game, 'getResult');
 
-    gameResult = game.getResult();
-    totalSets = gameResult.player1.length + gameResult.player2.length;
+    const gameResult = game.getResult();
+    const totalSets = gameResult.player1.length + gameResult.player2.length;
 
     expect(spies.getResult.callCount).to.be.equal(totalSets);
     expect(spies.getResult.callCount).to.be.below(6);
   });
 
-  afterEach(function() {
+  afterEach(() => {
     stubs.getId.restore();
     stubs.init.restore();
   });
 });
 
 /* EXERCISE 3 */
-describe("Handle on Player fields change - autocomplete", function() {
-  var game, stubs = {},
+describe("Handle on Player fields change - autocomplete", () => {
+  let game, stubs = {},
     spies = {};
 
-  beforeEach(function() {
+  beforeEach(() => {
     stubs.getId = sinon.stub(Game.prototype, 'getId');
     stubs.getId.onCall(0).returns(true);
     stubs.init = sinon.stub(Game.prototype, 'init');
@@ -196,7 +192,7 @@ describe("Handle on Player fields change - autocomplete", function() {
     game = new Game(testData.element);
   });
 
-  it("should clean player fields on empty string", function() {
+  it("should clean player fields on empty string", () => {
     spies.clearPlayersList = sinon.spy(game, 'clearPlayersList');
     stubs.getId.onCall(1).returns(true);
 
@@ -206,7 +202,7 @@ describe("Handle on Player fields change - autocomplete", function() {
     expect(spies.clearPlayersList.calledWith(testData.player1)).to.be.true;
   });
 
-  it("should call filterPlayers with searchString & renderPlayersList with fieldID", function() {
+  it("should call filterPlayers with searchString & renderPlayersList with fieldID", () => {
     spies.filterPlayers = sinon.spy(game, 'filterPlayers');
     spies.renderPlayersList = sinon.spy(game, 'renderPlayersList');
     stubs.getId.onCall(1).returns(true);
@@ -217,17 +213,15 @@ describe("Handle on Player fields change - autocomplete", function() {
     expect(spies.renderPlayersList.args[0][1]).to.be.equal(testData.elPlayer1);
   });
 
-  it("should search be case insensitive and return", function() {
-    var searcLowerCase, searchUpperCase;
-
-    searcLowerCase = game.filterPlayers(testData.searchStr);
-    searchUpperCase = game.filterPlayers(testData.searchStrUpper);
+  it("should search be case insensitive and return", () => {
+    const searcLowerCase = game.filterPlayers(testData.searchStr);
+    const searchUpperCase = game.filterPlayers(testData.searchStrUpper);
 
     expect(searcLowerCase).to.deep.equal(searchUpperCase);
     expect(searcLowerCase).to.deep.equal(testData.searchExpect);
   });
 
-  it("should set field value and clear playerList", function() {
+  it("should set field value and clear playerList", () => {
     spies.clearPlayersList = sinon.spy(game, 'clearPlayersList');
     stubs.getId.onCall(1).returns(true);
 
@@ -238,7 +232,7 @@ describe("Handle on Player fields change - autocomplete", function() {
   });
 
 
-  afterEach(function() {
+  afterEach(() => {
     stubs.getId.restore();
     stubs.init.restore();
   });
